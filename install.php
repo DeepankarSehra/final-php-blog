@@ -10,7 +10,20 @@ if ($_POST)
 {
     // Here's the install
     $pdo = getPDO();
-    list($_SESSION['count'], $_SESSION['error']) = installBlog($pdo);
+    list($rowCounts, $error) = installBlog($pdo);
+
+    $password = '';
+    if (!$error)
+    {
+        $username = 'admin';
+        list($password, $error) = createUser($pdo, $username);
+    }
+
+    $_SESSION['count'] = $rowCounts;
+    $_SESSION['error'] = $error;
+    $_SESSION['username'] = $username;
+    $_SESSION['password'] = $password;
+    $_SESSION['try-install'] = true;
 
     // ... and here we redirect from POST to GET
     redirectAndExit('install.php');
@@ -18,15 +31,20 @@ if ($_POST)
 
 // Let's see if we've just installed
 $attempted = false;
-if ($_SESSION)
+if (isset($_SESSION['try-install']))
 {
     $attempted = true;
     $count = $_SESSION['count'];
     $error = $_SESSION['error'];
+    $username = $_SESSION['username'];
+    $password = $_SESSION['password'];
 
     // Unset session variables, so we only report the install/failure once
     unset($_SESSION['count']);
     unset($_SESSION['error']);
+    unset($_SESSION['username']);
+    unset($_SESSION['password']);
+    unset($_SESSION['try-install']);
 }
 
 ?>
@@ -34,20 +52,7 @@ if ($_SESSION)
 <html>
     <head>
         <title>Blog installer</title>
-        <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-        <style type="text/css">
-            .box {
-                border: 1px dotted silver;
-                border-radius: 5px;
-                padding: 4px;
-            }
-            .error {
-                background-color: #ff6666;
-            }
-            .success {
-                background-color: #88ff88;
-            }
-        </style>
+        <?php require 'templates/head.php' ?>
     </head>
     <body>
         <?php if ($attempted): ?>
@@ -60,6 +65,7 @@ if ($_SESSION)
                 <div class="success box">
                     The database and demo data was created OK.
 
+                    <?php // Report the counts for each table ?>
                     <?php foreach (array('post', 'comment') as $tableName): ?>
                         <?php if (isset($count[$tableName])): ?>
                             <?php // Prints the count ?>
@@ -69,6 +75,11 @@ if ($_SESSION)
                             were created.
                         <?php endif ?>
                     <?php endforeach ?>
+
+                    <?php // Report the new password ?>
+                    The new '<?php echo htmlEscape($username) ?>' password is
+                    <span class="install-password"><?php echo htmlEscape($password) ?></span>
+                    (copy it to clipboard if you wish).
                 </div>
 
                 <p>

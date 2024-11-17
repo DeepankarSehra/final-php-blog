@@ -1,6 +1,5 @@
 <?php
 
-require 'lib/common.php';
 /**
  * Retrieves a single post
  * 
@@ -72,6 +71,8 @@ function addCommentToPost(PDO $pdo, $postId, array $commentData)
         {
             throw new Exception('Cannot prepare statement to insert comment');
         }
+
+        $createdTimestamp = date('Y-m-d H:m:s');
 
         $result = $stmt->execute(
             array_merge(
