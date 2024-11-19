@@ -37,6 +37,8 @@ function editPost(PDO $pdo, $title, $body, $postId)
         throw new Exception('Could not run update query.');
     }
 
+    redirectAndExit('index.php');
+
     return true;    
 
 }

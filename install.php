@@ -79,7 +79,6 @@ if (isset($_SESSION['try-install']))
                     <?php // Report the new password ?>
                     The new '<?php echo htmlEscape($username) ?>' password is
                     <span class="install-password"><?php echo htmlEscape($password) ?></span>
-                    (copy it to clipboard if you wish).
                 </div>
 
                 <p>

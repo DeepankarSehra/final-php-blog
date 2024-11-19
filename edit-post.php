@@ -61,8 +61,9 @@ if($_POST)
     }
 
     if(!$errors){
-        redirectAndExit('edit-post.php?post_id='.$postId);
+        redirectAndExit('index.php');
     }
+
 }
 
 
@@ -101,9 +102,9 @@ if($_POST)
             <div>
                 <label for="post-title">Title:</label>
                 <input 
-                    id="post-title",
-                    name="post-title",
-                    type="text",
+                    id="post-title"
+                    name="post-title"
+                    type="text"
                     value="<?php echo htmlEscape($title) ?>"
                 />    
             </div>
@@ -111,15 +112,18 @@ if($_POST)
             <div>
                 <label for="post-body">Body:</label>
                 <textarea
-                    id="post-body",
-                    name="post-body",
-                    rows="12",
+                    id="post-body"
+                    name="post-body"
+                    rows="12"
                     cols="70"
                 ><?php echo htmlEscape($body) ?></textarea>
             </div>
 
             <div>
-                <input type="submit", value="Save post", href="index.php">
+                <input
+                    type="submit"
+                    value="Save post"
+                />
                 <a href="index.php">Cancel</a>
             </div>
         </form>

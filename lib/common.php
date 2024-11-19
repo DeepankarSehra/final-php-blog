@@ -220,3 +220,16 @@ function getAuthUserId(PDO $pdo)
 
     return $stmt -> fetchColumn();
 }
+
+function getAllPosts(PDO $pdo)
+{
+    $stmt = $pdo -> query(
+        'SELECT id, title, created_at, body FROM post ORDER BY created_at DESC'
+    );
+
+    if($stmt === false){
+        throw new Exception('Cant get all posts');
+    }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
