@@ -55,6 +55,10 @@ if(!isLoggedIn()){
                             </td>
 
                             <td>
+                                <?php echo htmlEscape($post['comment_count']); ?> comments 
+                            </td>
+
+                            <td>
                                 <a href="edit-post.php?post_id=<?php echo $post['id']?>">Edit</a>
                             </td>
 
