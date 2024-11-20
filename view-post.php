@@ -15,11 +15,9 @@ else
     $postId = 0;
 }
 
-// Connect to the database, run a query, handle errors
 $pdo = getPDO();
 $row = getPostRow($pdo, $postId);
 
-// If the post does not exist, let's deal with that here
 if (!$row)
 {
     redirectAndExit('index.php?not-found=1');
@@ -28,22 +26,21 @@ if (!$row)
 $errors = null;
 if ($_POST)
 {
-    $commentData = array(
-        'name' => $_POST['comment-name'],
-        'website' => $_POST['comment-website'],
-        'text' => $_POST['comment-text'],
-    );
-    $errors = addCommentToPost(
-        $pdo,
-        $postId,
-        $commentData
-    );
-
-    // If there are no errors, redirect back to self and redisplay
-    if (!$errors)
+    switch($_GET['action'])
     {
-        redirectAndExit('view-post.php?post_id=' . $postId);
+        case 'add-comment':
+            $commentData = array(
+                'name' => $_POST['comment-name'],
+                'website' => $_POST['comment-website'],
+                'text' => $_POST['comment-text'],
+            );
+            $errors = handleAddComment($pdo, $postId, $commentData);
+            break;
+        case 'delete-comment':
+            $deleteResponse = $_POST['delete-comment'];
+            handleDeleteComment($pdo, $postId, $deleteResponse);
     }
+    
 }
 else
 {
@@ -79,7 +76,7 @@ else
             <?php echo convertNewlinesToParagraphs($row['body']) ?>
         </div>
 
-        <?php require 'lib/list-comments.php'?>
+        <?php require 'templates/list-comments.php'?>
 
         <?php require 'templates/comment-form.php' ?>
     </body>
