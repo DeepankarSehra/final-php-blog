@@ -100,31 +100,6 @@ function redirectAndExit($script)
 }
 
 /**
- * Returns the number of comments for the specified post
- * 
- * @param integer $postId
- * @return integer
- */
-function countCommentsForPost(PDO $pdo, $postId)
-{
-    $pdo = getPDO();
-    $sql = "
-        SELECT
-            COUNT(*) c
-        FROM
-            comment
-        WHERE
-            post_id = :post_id
-    ";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute(
-        array('post_id' => $postId, )
-    );
-
-    return (int) $stmt->fetchColumn();
-}
-
-/**
  * Returns all the comments for the specified post
  * 
  * @param integer $postId
@@ -157,6 +132,7 @@ function tryLogin(PDO $pdo, $username, $password)
             user
         WHERE
             username = :username
+        AND is_enabled = 1
     ";
     $stmt = $pdo->prepare($sql);
     $stmt->execute(
@@ -212,7 +188,7 @@ function getAuthUserId(PDO $pdo)
         return null;
     }
 
-    $sql = 'SELECT id from user WHERE username = :username';
+    $sql = 'SELECT id from user WHERE username = :username AND is_enabled = 1';
     $stmt = $pdo->prepare($sql);
     $stmt -> execute(
         array('username' => getAuthUser())

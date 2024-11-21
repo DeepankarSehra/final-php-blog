@@ -43,11 +43,20 @@ if(!isLoggedIn()){
         <p> You have <?php echo count($posts)?> posts. </p>
         <form method="post">
             <table id="post-list">
+                <thead>
+                    <tr>
+                        <th> Title </th>
+                        <th> Creation date </th>
+                        <th> Comments </th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tbody>
                     <?php foreach ($posts as $post): ?>
                         <tr>
                             <td>
-                                <?php echo htmlEscape($post['title'])?>
+                                <a href="view-post.php?post_id=<?php echo $post['id'] ?>"><?php echo htmlEscape($post['title'])?></a>
                             </td>
 
                             <td>

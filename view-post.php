@@ -17,6 +17,7 @@ else
 
 $pdo = getPDO();
 $row = getPostRow($pdo, $postId);
+$commentCount = $row['comment_count'];
 
 if (!$row)
 {

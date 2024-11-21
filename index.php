@@ -5,6 +5,7 @@ session_start();
 
 // Connect to the database, run a query, handle errors
 $pdo = getPDO();
+$posts = getAllPosts($pdo);
 $stmt = $pdo->query(
     'SELECT
         id, title, created_at, body
@@ -37,32 +38,32 @@ $notFound = isset($_GET['not-found']);
         <?php endif ?>
 
         <div class="post-list">
-            <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)): ?>
+            <?php foreach ($posts as $post): ?>
                 <div class="post-synopsis"> 
                     <h2>
-                        <?php echo htmlEscape($row['title']) ?>
-                    </h2>
+                        <?php echo htmlEscape($post['title']) ?>
+                    </h2>   
                     <div class="meta">
-                        <?php echo convertSqlDate($row['created_at']) ?>
+                        <?php echo convertSqlDate($post['created_at']) ?>
 
-                        (<?php echo countCommentsForPost($pdo, $row['id']) ?> comments)
+                        (<?php echo $post['comment_count'] ?> comments)
                     </div>
                     <p>
-                        <?php echo htmlEscape($row['body']) ?>
+                        <?php echo htmlEscape($post['body']) ?>
                     </p>
                     <div class="post-controls">
                         <a
-                            href="view-post.php?post_id=<?php echo $row['id'] ?>"
+                            href="view-post.php?post_id=<?php echo $post['id'] ?>"
                         >Read more...</a>
                         <?php if (isLoggedIn()): ?>
                             |
                             <a
-                                href="edit-post.php?post_id=<?php echo $row['id'] ?>"
+                                href="edit-post.php?post_id=<?php echo $post['id'] ?>"
                             >Edit</a>
                         <?php endif ?>
                     </div>
                 </div>
-            <?php endwhile ?>
+            <?php endforeach ?>
         </div>
 
     </body>
