@@ -52,7 +52,7 @@ if (isset($_SESSION['try-install']))
 <html>
     <head>
         <title>Blog installer</title>
-        <?php require 'templates/head.php' ?>
+        <?php require_once 'templates/head.php' ?>
     </head>
     <body>
         <?php if ($attempted): ?>

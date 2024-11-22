@@ -39,10 +39,10 @@ if ($_POST)
         <title>
             A blog application | Login
         </title>
-        <?php require 'templates/head.php' ?>
+        <?php require_once 'templates/head.php' ?>
     </head>
     <body>
-        <?php require 'templates/title.php' ?>
+        <?php require_once 'templates/title.php' ?>
 
         <?php // If we have a username, then the user got something wrong, so let's have an error ?>
         <?php if ($username): ?>

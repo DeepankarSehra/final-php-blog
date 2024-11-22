@@ -61,8 +61,8 @@ if($_POST)
     }
 
     if(!$errors){
-        redirectAndExit('index.php');
-    }
+        redirectAndExit('edit-post.php?post_id='.$postId);
+    }   
 
 }
 

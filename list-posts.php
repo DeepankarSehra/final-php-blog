@@ -1,6 +1,6 @@
 <?php 
-require 'lib/common.php';
-require 'lib/list-posts.php';
+require_once 'lib/common.php';
+require_once 'lib/list-posts.php';
 
 session_start();
 
@@ -33,11 +33,11 @@ if(!isLoggedIn()){
 <html>
     <head>
         <title> A blog application | Blog posts</title>
-        <?php require 'templates/head.php' ?>
+        <?php require_once 'templates/head.php' ?>
     </head>
 
     <body>
-        <?php require 'templates/top-menu.php' ?>
+        <?php require_once 'templates/top-menu.php' ?>
 
         <h1> Post list </h1>
         <p> You have <?php echo count($posts)?> posts. </p>
