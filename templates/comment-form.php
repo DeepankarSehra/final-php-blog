@@ -1,10 +1,4 @@
-<?php
-/**
- * @var $errors string
- * @var $commentData array
- */
-?>
-
+<?php require_once 'lib/common.php' ?>
 <?php // Report any errors in a bullet-point list ?>
 <?php if ($errors): ?>
     <div class="error box comment margin">
@@ -18,7 +12,7 @@
 
 <h3>Add your comments</h3>
 
-<!-- <form method="post" class="comment-form user-form"> -->
+
 <form method="post" 
     class="comment-form user-form"
     action="view-post.php?action=add-comment&amp;post_id=<?php echo $postId?>">

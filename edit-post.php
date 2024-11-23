@@ -79,7 +79,6 @@ if($_POST)
     </head>
 
     <body>
-        <!-- <?php require 'templates/title.php'?>  -->
         <?php require 'templates/top-menu.php' ?>
 
         <?php if(isset($_GET['post_id'])): ?>

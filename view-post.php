@@ -60,10 +60,10 @@ else
             Blogu title |
             <?php echo htmlEscape($row['title']) ?>
         </title>
-        <?php require 'templates/head.php' ?>
+        <?php require_once 'templates/head.php' ?>
     </head>
     <body>
-        <?php require 'templates/title.php' ?>
+        <?php require_once 'templates/title.php' ?>
 
         <div class="post">
             <h2>
@@ -77,8 +77,8 @@ else
             <?php echo convertNewlinesToParagraphs($row['body']) ?>
         </div>
 
-        <?php require 'templates/list-comments.php'?>
+        <?php require_once 'templates/list-comments.php'?>
 
-        <?php require 'templates/comment-form.php' ?>
+        <?php require_once 'templates/comment-form.php' ?>
     </body>
 </html>
