@@ -37,7 +37,7 @@ if ($_POST)
 <html>
     <head>
         <title>
-            A blog application | Login
+            Blogu title | Login
         </title>
         <?php require_once 'templates/head.php' ?>
     </head>

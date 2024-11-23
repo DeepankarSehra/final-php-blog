@@ -46,10 +46,8 @@ INSERT INTO
 		title, body, user_id, created_at
 	)
 	VALUES(
-		"Here's our first post",
-		"This is the body of the first post.
-
-It is split into paragraphs.",
+		"My last post...",
+		"If placements go sideways, i will kill myself",
 		1,
 		datetime('now', '-2 months', '-45 minutes', '+10 seconds')
 	)
@@ -61,27 +59,13 @@ INSERT INTO
 		title, body, user_id, created_at
 	)
 	VALUES(
-		"Now for a second article",
-		"This is the body of the second post.
-This is another paragraph.",
+		"First actual post uploaded online",
+		"teri mummy",
 		1,
 		datetime('now', '-40 days', '+815 minutes', '+37 seconds')
 	)
 ;
 
-INSERT INTO
-	post
-	(
-		title, body, user_id, created_at
-	)
-	VALUES(
-		"Here's a third post",
-		"This is the body of the third post.
-This is split into paragraphs.",
-		1,
-		datetime('now', '-13 days', '+198 minutes', '+51 seconds')
-	)
-;
 
 DROP TABLE IF EXISTS comment;
 
@@ -103,22 +87,8 @@ INSERT INTO
 	VALUES(
 		1,
 		datetime('now', '-10 days', '+231 minutes', '+7 seconds'),
-		'Jimmy',
-		'http://example.com/',
-		"This is Jimmy's contribution"
-	)
-;
-
-INSERT INTO
-	comment
-	(
-		post_id, created_at, name, website, text
-	)
-	VALUES(
-		1,
-		datetime('now', '-8 days', '+549 minutes', '+32 seconds'),
-		'Jonny',
-		'http://anotherexample.com/',
-		"This is a comment from Jonny"
+		'aasif',
+		'',
+		"i like boobs"
 	)
 ;

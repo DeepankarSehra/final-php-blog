@@ -1,5 +1,7 @@
 <?php
 
+require_once 'lib/common.php';
+
 /**
  * Gets the root path of the project
  * 
@@ -142,7 +144,7 @@ function tryLogin(PDO $pdo, $username, $password)
     // Get the hash from this row, and use the third-party hashing library to check it
     $hash = $stmt->fetchColumn();
     $success = password_verify($password, $hash);
-
+    // echo htmlEscape('login toh hogaya');
     return $success;
 }
 
@@ -172,7 +174,13 @@ function logout()
 
 function getAuthUser()
 {
-    return isLoggedIn() ? $_SESSION['logged_in_username'] : null;
+    if(isLoggedIn()){
+        return $_SESSION['logged_in_username'];
+    }
+    else{
+        return null;
+    }
+    // return isLoggedIn() ? $_SESSION['logged_in_username'] : null;
 }
 
 function isLoggedIn()

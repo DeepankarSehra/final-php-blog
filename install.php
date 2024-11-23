@@ -15,8 +15,7 @@ if ($_POST)
     $password = '';
     if (!$error)
     {
-        $username = 'admin';
-        list($password, $error) = createUser($pdo, $username);
+        require 'add-users.php';
     }
 
     $_SESSION['count'] = $rowCounts;

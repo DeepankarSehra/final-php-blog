@@ -25,11 +25,11 @@ $notFound = isset($_GET['not-found']);
 <!DOCTYPE html>
 <html>
     <head>
-        <title>A blog application</title>
-        <?php require 'templates/head.php' ?>
+        <title>Blogu title</title>
+        <?php require_once 'templates/head.php' ?>
     </head>
     <body>
-        <?php require 'templates/title.php' ?>
+        <?php require_once 'templates/title.php' ?>
 
         <?php if ($notFound): ?>
             <div class="error box">

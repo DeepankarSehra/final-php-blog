@@ -1,6 +1,6 @@
 <?php require 'templates/top-menu.php' ?>
 
 <a href="index.php">
-    <h1>Blog title</h1>
+    <h1>Test stt blog title</h1>
 </a>
-<p>This paragraph summarises what the blog is about.</p>
+<p>We shall see what to put here later on, until then apki mother.</p>

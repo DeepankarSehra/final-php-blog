@@ -81,29 +81,18 @@ function installBlog(PDO $pdo)
  * @param integer $length
  * @return array Duple of (password, error)
  */
-function createUser(PDO $pdo, $username, $length = 10)
+function createUser(PDO $pdo, $username, $password)
 {
-    // This algorithm creates a random password
-    $alphabet = range(ord('A'), ord('z'));
-    $alphabetLength = count($alphabet);
-
-    $password = 'admin';
-    // for($i = 0; $i < $length; $i++)
-    // {
-    //     $letterCode = $alphabet[rand(0, $alphabetLength - 1)];
-    //     $password .= chr($letterCode);
-    // }
-
+    
     $error = '';
 
     // Insert the credentials into the database
     $sql = "
-        UPDATE
+        INSERT INTO
             user
-        SET
-            password = :password, created_at = :created_at, is_enabled = 1
-        WHERE
-            username = :username
+        (username, password, created_at, is_enabled)
+        VALUES 
+        (:username, :password, :created_at, 1);
     ";
     $stmt = $pdo->prepare($sql);
     if ($stmt === false)

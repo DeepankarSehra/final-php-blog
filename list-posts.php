@@ -32,7 +32,7 @@ if(!isLoggedIn()){
 
 <html>
     <head>
-        <title> A blog application | Blog posts</title>
+        <title> Blogu title | Blog posts</title>
         <?php require_once 'templates/head.php' ?>
     </head>
 

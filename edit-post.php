@@ -73,7 +73,7 @@ if($_POST)
 <html>
     <head>
         <title>
-            A Blog application | New Post
+            Blogu title | New Post
         </title>
         <?php require 'templates/head.php'?>
     </head>
