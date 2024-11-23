@@ -74,7 +74,6 @@ CREATE TABLE comment (
 	post_id INTEGER NOT NULL,
 	created_at VARCHAR NOT NULL,
 	name VARCHAR NOT NULL,
-	website VARCHAR,
 	text VARCHAR NOT NULL,
 	FOREIGN KEY (post_id) REFERENCES post(id)
 );
@@ -82,13 +81,12 @@ CREATE TABLE comment (
 INSERT INTO
 	comment
 	(
-		post_id, created_at, name, website, text
+		post_id, created_at, name, text
 	)
 	VALUES(
 		1,
 		datetime('now', '-10 days', '+231 minutes', '+7 seconds'),
 		'aasif',
-		'',
 		"i like boobs"
 	)
 ;

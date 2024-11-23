@@ -28,17 +28,6 @@
         />
     </div>
     <div>
-        <label for="comment-website">
-            Website:
-        </label>
-        <input
-            type="text"
-            id="comment-website"
-            name="comment-website"
-            value="<?php echo htmlEscape($commentData['website']) ?>"
-        />
-    </div>
-    <div>
         <label for="comment-text">
             Comment:
         </label>

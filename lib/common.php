@@ -112,7 +112,7 @@ function getCommentsForPost(PDO $pdo, $postId)
     $pdo = getPDO();
     $sql = "
         SELECT
-            id, name, text, created_at, website
+            id, name, text, created_at
         FROM
             comment
         WHERE

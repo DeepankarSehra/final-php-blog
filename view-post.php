@@ -32,7 +32,6 @@ if ($_POST)
         case 'add-comment':
             $commentData = array(
                 'name' => $_POST['comment-name'],
-                'website' => $_POST['comment-website'],
                 'text' => $_POST['comment-text'],
             );
             $errors = handleAddComment($pdo, $postId, $commentData);
@@ -47,7 +46,6 @@ else
 {
     $commentData = array(
         'name' => '',
-        'website' => '',
         'text' => '',
     );
 }

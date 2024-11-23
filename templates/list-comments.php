@@ -12,11 +12,13 @@
             Comment from
             <?php echo htmlEscape($comment['name']) ?> on <?php echo convertSqlDate($comment['created_at']) ?>
             <?php if(isLoggedIn()): ?>
-                <input
-                    type='submit'
-                    name="delete-comment[<?php echo $comment['id'] ?>]"
-                    value="delete"
-                />
+                <?php if(getAuthUser() === 'admin'): ?>
+                    <input
+                        type='submit'
+                        name="delete-comment[<?php echo $comment['id'] ?>]"
+                        value="delete"
+                    />
+                <?php endif ?>
         </div>
         <?php endif ?>
 
