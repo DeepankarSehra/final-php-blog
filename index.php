@@ -56,10 +56,11 @@ $notFound = isset($_GET['not-found']);
                             href="view-post.php?post_id=<?php echo $post['id'] ?>"
                         >Read more...</a>
                         <?php if (isLoggedIn()): ?>
-                            |
-                            <a
-                                href="edit-post.php?post_id=<?php echo $post['id'] ?>"
-                            >Edit</a>
+                            <?php if(checkUser($pdo, $post['id'], getAuthUser())): ?>
+                                <a
+                                    href="edit-post.php?post_id=<?php echo $post['id'] ?>"
+                                >Edit</a>
+                            <?php endif ?>
                         <?php endif ?>
                     </div>
                 </div>

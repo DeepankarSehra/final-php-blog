@@ -71,6 +71,7 @@ function convertSqlDate($sqlDate)
 
 function getSqlDateForNow()
 {
+    date_default_timezone_set('Asia/Kolkata');
     return date('Y-m-d H:i:s');
 }
 
@@ -216,4 +217,50 @@ function getAllPosts(PDO $pdo)
     }
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function getUserFromUserId(PDO $pdo, $userId){
+    $sql = 'SELECT username FROM user WHERE id=:id';
+    $stmt = $pdo -> prepare($sql);
+    if($stmt === false){
+        throw new Exception('cant get user from id');
+    }
+
+    $stmt->execute(
+        array('id' => $userId)
+    );
+
+    return $stmt->fetchColumn();
+}
+
+
+function getUserFromPostId(PDO $pdo, $postId)
+{
+    $sql = 'SELECT user_id FROM post WHERE id=:id';
+    $stmt = $pdo->prepare($sql);
+    if($stmt === false){
+        throw new Exception('cant get user from post id');
+    }
+
+    $stmt -> execute(
+        array('id' => $postId)
+    );
+
+    return $stmt->fetchColumn();
+}
+
+function checkUser(PDO $pdo, $postId, $username)
+{
+    $userId = getUserFromPostId($pdo, $postId);
+    $author = getUserFromUserId($pdo, $userId);
+    $adminUsername = 'admin';
+
+    $allowed = false;
+    if($author === $username or $username === $adminUsername)
+    {
+        $allowed = true;
+    }
+
+    return $allowed;
 }

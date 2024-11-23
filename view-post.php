@@ -70,7 +70,7 @@ else
                 <?php echo htmlEscape($row['title']) ?>
             </h2>
             <div class="date">
-                <?php echo convertSqlDate($row['created_at']) ?>
+                <?php echo convertSqlDate($row['created_at']) ?> by <?php echo htmlEscape(getUserFromUserId($pdo,$row['user_id'])) ?>
             </div>
 
             <?php // This is already escaped, so doesn't need further escaping ?>

@@ -68,15 +68,19 @@ if(!isLoggedIn()){
                             </td>
 
                             <td>
-                                <a href="edit-post.php?post_id=<?php echo $post['id']?>">Edit</a>
+                                <?php if(checkUser($pdo, $post['id'], getAuthUser())): ?>
+                                    <a href="edit-post.php?post_id=<?php echo $post['id']?>">Edit</a>
+                                <?php endif ?>
                             </td>
 
                             <td>
-                                <input
-                                    type="submit"
-                                    name="delete-post[<?php echo $post['id']?>]"
-                                    value="Delete"
-                                />
+                                <?php if(checkUser($pdo, $post['id'], getAuthUser())): ?>
+                                    <input
+                                        type="submit"
+                                        name="delete-post[<?php echo $post['id']?>]"
+                                        value="Delete"
+                                    />
+                                <?php endif ?>
                             </td>
                         </tr>
                         <?php endforeach ?>

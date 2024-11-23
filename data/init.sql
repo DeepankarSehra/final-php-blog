@@ -46,7 +46,7 @@ INSERT INTO
 		title, body, user_id, created_at
 	)
 	VALUES(
-		"My last post...",
+		"My last post",
 		"If placements go sideways, i will kill myself",
 		1,
 		datetime('now', '-2 months', '-45 minutes', '+10 seconds')
