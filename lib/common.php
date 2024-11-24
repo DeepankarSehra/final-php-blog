@@ -264,3 +264,51 @@ function checkUser(PDO $pdo, $postId, $username)
 
     return $allowed;
 }
+
+
+function getAllUsers(PDO $pdo)
+{
+    $stmt = $pdo -> query(
+        'SELECT id, username, created_at FROM user ORDER BY created_at DESC'
+    );
+
+    if($stmt === false){
+        throw new Exception('Cant get all users');
+    }
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function deleteUser(PDO $pdo, $username)
+{
+    $sql = 'SELECT id FROM user WHERE username=:username';
+    $stmt = $pdo -> prepare($sql);
+
+    $stmt -> execute(
+        array('username' => $username)
+    );
+
+    $userId = $stmt -> fetchColumn();
+
+    if(!$userId){
+        throw new Exception('Invalid username. Deletion not allowed.');
+    }
+
+    // deleting posts by the user
+    $sqlDeletePosts = 'DELETE FROM post WHERE user_id=:user_id';
+    $stmt = $pdo -> prepare($sqlDeletePosts);
+
+    $stmt -> execute(
+        array('user_id' => $userId)
+    );
+
+    $sqlDeleteUser = 'DELETE FROM user WHERE username=:username';
+    $stmt = $pdo -> prepare($sqlDeleteUser);
+
+    $stmt -> execute(
+        array('username' => $username)
+    );
+
+    return $stmt;
+}

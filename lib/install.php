@@ -133,3 +133,5 @@ function createUser(PDO $pdo, $username, $password)
 
     return array($password, $error);
 }
+
+

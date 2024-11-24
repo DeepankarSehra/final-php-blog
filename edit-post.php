@@ -1,7 +1,7 @@
 <?php 
 require_once 'lib/common.php';
 require_once 'lib/edit-post.php';
-require_once 'lib/view-post.php';
+require_once 'lib/view-post.php';   
 
 session_start();
 
