@@ -12,7 +12,7 @@ if ($_POST)
         $deleteUserUsername = $keys[0];
         if ($deleteUserUsername)
         {
-            deleteUser(getPDO(), $deleteUserUsername);
+            deleteUserWithCascade(getPDO(), $deleteUserUsername);
         }
     }
 }
@@ -45,6 +45,7 @@ if(!isLoggedIn() and getAuthUser() !== 'admin'){
                     <tr>
                         <th> Username </th>
                         <th> Creation date </th>
+                        <th> Number of posts </th>
                         <th></th>
                     </tr>
                 </thead>
@@ -57,6 +58,10 @@ if(!isLoggedIn() and getAuthUser() !== 'admin'){
 
                             <td>
                                 <?php echo convertSqlDate($user['created_at']) ?>
+                            </td>
+
+                            <td>
+                                <?php echo htmlEscape(getPostCounts($pdo, $user['id'])) ?>
                             </td>
 
                             <td>

@@ -219,6 +219,22 @@ function getAllPosts(PDO $pdo)
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getPostCounts(PDO $pdo, $userId)
+{
+    $sql = 'SELECT COUNT(*) FROM post WHERE user_id=:userid';
+    $stmt = $pdo -> prepare($sql);
+
+    if($stmt === false){
+        throw new Exception('Cant get post counts');
+    }
+
+    $stmt -> execute(
+        array('userid' => $userId)
+    );
+
+    return $stmt->fetchColumn();
+}
+
 
 function getUserFromUserId(PDO $pdo, $userId){
     $sql = 'SELECT username FROM user WHERE id=:id';
@@ -280,35 +296,54 @@ function getAllUsers(PDO $pdo)
 }
 
 
-function deleteUser(PDO $pdo, $username)
-{
-    $sql = 'SELECT id FROM user WHERE username=:username';
-    $stmt = $pdo -> prepare($sql);
+function deleteUserWithCascade(PDO $pdo, $username) {
+    try {
+        // Start transaction
+        $pdo->beginTransaction();
 
-    $stmt -> execute(
-        array('username' => $username)
-    );
+        // First, find the user ID
+        $userStmt = $pdo->prepare("SELECT id FROM user WHERE username = :username");
+        $userStmt->execute(['username' => $username]);
+        $user = $userStmt->fetch(PDO::FETCH_ASSOC);
 
-    $userId = $stmt -> fetchColumn();
+        if (!$user) {
+            throw new Exception("User not found");
+        }
 
-    if(!$userId){
-        throw new Exception('Invalid username. Deletion not allowed.');
+        $userId = $user['id'];
+
+        // Delete comments on user's posts first
+        $deleteCommentsStmt = $pdo->prepare("
+            DELETE FROM comment 
+            WHERE post_id IN (
+                SELECT id FROM post 
+                WHERE user_id = :user_id
+            )
+        ");
+        $deleteCommentsStmt->execute(['user_id' => $userId]);
+
+        // Delete user's posts
+        $deletePostsStmt = $pdo->prepare("
+            DELETE FROM post 
+            WHERE user_id = :user_id
+        ");
+        $deletePostsStmt->execute(['user_id' => $userId]);
+
+        // Delete the user
+        $deleteUserStmt = $pdo->prepare("
+            DELETE FROM user 
+            WHERE id = :user_id
+        ");
+        $deleteUserStmt->execute(['user_id' => $userId]);
+
+        // Commit transaction
+        $pdo->commit();
+
+        return true;
+    } catch (Exception $e) {
+        // Rollback transaction on error
+        $pdo->rollBack();
+        error_log("User deletion failed: " . $e->getMessage());
+        return false;
     }
-
-    // deleting posts by the user
-    $sqlDeletePosts = 'DELETE FROM post WHERE user_id=:user_id';
-    $stmt = $pdo -> prepare($sqlDeletePosts);
-
-    $stmt -> execute(
-        array('user_id' => $userId)
-    );
-
-    $sqlDeleteUser = 'DELETE FROM user WHERE username=:username';
-    $stmt = $pdo -> prepare($sqlDeleteUser);
-
-    $stmt -> execute(
-        array('username' => $username)
-    );
-
-    return $stmt;
 }
