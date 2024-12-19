@@ -48,7 +48,7 @@ $notFound = isset($_GET['not-found']);
                         <?php echo htmlEscape(substr($post['body'], 0, 100)) ?>
                         <?php if(strlen($post['body']) > 100)
                         {
-                            echo htmlEscape(".......");
+                            echo htmlEscape("......");
                         }
                         ?>
                     </p>
