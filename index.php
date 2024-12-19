@@ -36,7 +36,8 @@ $notFound = isset($_GET['not-found']);
             <?php foreach ($posts as $post): ?>
                 <div class="post-synopsis"> 
                     <h2>
-                        <?php echo htmlEscape($post['title']) ?>
+                        <!-- <?php echo htmlEscape($post['title']) ?> -->
+                        <a href="view-post.php?post_id=<?php echo $post['id'] ?>"> <?php echo htmlEscape($post['title']) ?> </a>
                     </h2>   
                     <div class="meta">
                         <?php echo convertSqlDate($post['created_at']) ?>
@@ -44,7 +45,12 @@ $notFound = isset($_GET['not-found']);
                         (<?php echo $post['comment_count'] ?> comments)
                     </div>
                     <p>
-                        <?php echo htmlEscape($post['body']) ?>
+                        <?php echo htmlEscape(substr($post['body'], 0, 100)) ?>
+                        <?php if(strlen($post['body']) > 100)
+                        {
+                            echo htmlEscape(".....");
+                        }
+                        ?>
                     </p>
                     <div class="post-controls">
                         <a
