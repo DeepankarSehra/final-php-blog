@@ -23,12 +23,7 @@ $notFound = isset($_GET['not-found']);
 
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Blogu title</title>
-        <?php require_once 'templates/head.php' ?>
-    </head>
-    <body>
+        <?php include 'templates/head.php' ?>
         <?php require_once 'templates/title.php' ?>
 
         <?php if ($notFound): ?>

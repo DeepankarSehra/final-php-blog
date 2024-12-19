@@ -69,15 +69,7 @@ if($_POST)
 ?>
 
 <DOCTYPE html>
-<html>
-    <head>
-        <title>
-            Blogu title | New Post
-        </title>
-        <?php require 'templates/head.php'?>
-    </head>
-
-    <body>
+        <?php include 'templates/head.php' ?>
         <?php require 'templates/top-menu.php' ?>
 
         <?php if(isset($_GET['post_id'])): ?>

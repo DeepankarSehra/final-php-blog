@@ -31,13 +31,7 @@ if($_POST)
 ?>
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Blogu title | New user</title>
-        <?php require 'templates/head.php'?>
-    </head>
-
-    <body>
+        <?php include 'templates/head.php' ?>
         <?php require 'templates/top-menu.php' ?>
         <form 
             method="post"

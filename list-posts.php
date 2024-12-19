@@ -30,13 +30,7 @@ if(!isLoggedIn()){
 
 <DOCTYPE html>
 
-<html>
-    <head>
-        <title> Blogu title | Blog posts</title>
-        <?php require_once 'templates/head.php' ?>
-    </head>
-
-    <body>
+        <?php include 'templates/head.php' ?>
         <?php require_once 'templates/top-menu.php' ?>
 
         <h1> Post list </h1>

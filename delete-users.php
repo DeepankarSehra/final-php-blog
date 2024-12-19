@@ -28,13 +28,7 @@ if(!isLoggedIn() and getAuthUser() !== 'admin'){
 
 <DOCTYPE html>
 
-<html>
-    <head>
-        <title> Blogu title | Delete users</title>
-        <?php require_once 'templates/head.php' ?>
-    </head>
-
-    <body>
+        <?php include 'templates/head.php' ?>
         <?php require_once 'templates/top-menu.php' ?>
 
         <h1> User list </h1>

@@ -34,14 +34,7 @@ if ($_POST)
 }
 ?>
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>
-            Blogu title | Login
-        </title>
-        <?php require_once 'templates/head.php' ?>
-    </head>
-    <body>
+        <?php include 'templates/head.php' ?>
         <?php require_once 'templates/title.php' ?>
 
         <?php // If we have a username, then the user got something wrong, so let's have an error ?>
