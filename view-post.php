@@ -71,6 +71,16 @@ else
                 <?php echo convertSqlDate($row['created_at']) ?> by <?php echo htmlEscape(getUserFromUserId($pdo,$row['user_id'])) ?>
             </div>
 
+            <?php if(!empty($row['image_path'])):?>
+                <div class="post-image">
+                    <img src="<?php echo htmlEscape($row['image_path']); ?>" alt="Post Image" style="max-width: 500px; height: 300px;">
+                </div>
+            <?php else:?>
+                <div class="post-image">
+                    link nono.
+                </div>
+            <?php endif; ?>    
+
             <?php // This is already escaped, so doesn't need further escaping ?>
             <?php echo convertNewlinesToParagraphs($row['body']) ?>
         </div>

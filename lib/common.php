@@ -97,7 +97,7 @@ function redirectAndExit($script)
 
     // Redirect to the full URL (http://myhost/blog/script.php)
     $host = $_SERVER['HTTP_HOST'];
-    $fullUrl = 'http://' . $host . $urlFolder . $script;
+    $fullUrl = 'https://' . $host . $urlFolder . $script;
     header('Location: ' . $fullUrl);
     exit();
 }
@@ -209,7 +209,7 @@ function getAuthUserId(PDO $pdo)
 function getAllPosts(PDO $pdo)
 {
     $stmt = $pdo -> query(
-        'SELECT id, title, created_at, body, (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id) comment_count FROM post ORDER BY created_at DESC'
+        'SELECT id, title, created_at, body, (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id) comment_count, image_path FROM post ORDER BY created_at DESC'
     );
 
     if($stmt === false){

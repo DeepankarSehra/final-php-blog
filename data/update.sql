@@ -1,0 +1,1 @@
+ALTER TABLE post ADD COLUMN image_path VARCHAR(255);

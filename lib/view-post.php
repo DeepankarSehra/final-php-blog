@@ -11,7 +11,7 @@ function getPostRow(PDO $pdo, $postId)
 {
     $stmt = $pdo->prepare(
         'SELECT
-            title, created_at, body, (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id) comment_count, user_id
+            title, created_at, body, (SELECT COUNT(*) FROM comment WHERE comment.post_id = post.id) comment_count, user_id, image_path
         FROM
             post
         WHERE

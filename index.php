@@ -1,7 +1,7 @@
 <?php
 require_once 'lib/common.php';
-
 session_start();
+require_once 'lib/protected.php';
 
 // Connect to the database, run a query, handle errors
 $pdo = getPDO();
@@ -25,7 +25,7 @@ $notFound = isset($_GET['not-found']);
 <!DOCTYPE html>
         <?php include 'templates/head.php' ?>
         <?php require_once 'templates/title.php' ?>
-
+    <body>
         <?php if ($notFound): ?>
             <div class="error box">
                 Error: cannot find the requested blog post
@@ -35,20 +35,36 @@ $notFound = isset($_GET['not-found']);
         <div class="post-list">
             <?php foreach ($posts as $post): ?>
                 <div class="post-synopsis"> 
+
                     <h2>
                         <!-- <?php echo htmlEscape($post['title']) ?> -->
                         <a href="view-post.php?post_id=<?php echo $post['id'] ?>"> <?php echo htmlEscape($post['title']) ?> </a>
                     </h2>   
+
                     <div class="meta">
                         <?php echo convertSqlDate($post['created_at']) ?>
 
                         (<?php echo $post['comment_count'] ?> comments)
                     </div>
+
+                    <?php if(!empty($post['image_path'])):?>
+                        <div class="post-image">
+                            <img src="<?php echo htmlEscape($post['image_path']); ?>" alt="Post Image" style="max-width: 400px; height: 200px;">
+                        </div>
+                        <?php else:?>
+                        <div class="post-image">
+                            link nono.
+                        </div>
+                    <?php endif; ?>    
+
                     <p>
-                        <?php echo htmlEscape(substr($post['body'], 0, 100)) ?>
-                        <?php if(strlen($post['body']) > 100)
+                        <?php if(strlen($post['body']) > 200)
                         {
-                            echo htmlEscape(".......");
+                            echo htmlEscape(substr($post['body'], 0, 200) . '.....');
+                        }
+                        else
+                        {
+                            echo htmlEscape($post['body']);
                         }
                         ?>
                     </p>

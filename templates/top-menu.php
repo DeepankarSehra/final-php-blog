@@ -2,7 +2,7 @@
     <div class="menu-options">
         <?php if (isLoggedIn()): ?>
             <a href="index.php">Hello <?php echo htmlEscape(getAuthUser()) ?></a>
-            <?php if(getAuthUser() === 'admin'): ?>
+            <?php if (getAuthUser() === 'admin'): ?>
                 <a href="add-users.php">Add user</a>
                 <a href="delete-users.php">Delete users</a>
             <?php endif ?>

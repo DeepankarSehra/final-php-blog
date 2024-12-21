@@ -12,7 +12,7 @@ if(!isLoggedIn())
 }
 
 // empty default variables
-$title = $body = '';
+$title = $body = $imagePath = '';
 
 // initialise database and get handle
 $pdo = getPDO();
@@ -24,6 +24,7 @@ if(isset($_GET['post_id'])){
         $postId = $_GET['post_id'];
         $title = $post['title'];
         $body = $post['body'];
+        $imagePath = $post['image_path'];
     }
 }
 
@@ -43,16 +44,42 @@ if($_POST)
         $errors[] = 'The post must have a body';
     }
 
+    // Handle image upload
+    $uploadedImagePath = null;
+    if(isset($_FILES['post-image']) && $_FILES['post-image']['error'] === UPLOAD_ERR_OK)
+    {
+        $uploadDir = 'uploads/';
+        $imageName = basename($_FILES['post-image']['name']);
+        $targetFile = $uploadDir . $imageName;
+
+        // check if dir exists
+        if(!is_dir($uploadDir)){
+            mkdir($uploadDir, 0777, true);
+        }
+
+        if(move_uploaded_file($_FILES['post-image']['tmp_name'], $targetFile)){
+            $uploadedImagePath = $targetFile;
+
+            if($imagePath && file_exists($imagePath)){
+                unlink($imagePath);
+            }
+        }
+        else{
+            $errors[] = 'error uploading the image';
+        }
+    }
+
     if(!$errors)
     {
         $pdo = getPDO();
         // decide if editing or adding post
         if($postId){
-            editPost($pdo, $title, $body, $postId);
+            $imagePathToUse = $uploadedImagePath ?? $imagePath;         // use the new image path if uploaded, otherwise retain the prev path
+            editPost($pdo, $title, $body, $postId, $imagePathToUse);
         }
         else{
             $userId = getAuthUserId($pdo);
-            $postId = addPost($pdo, $title, $body, $userId);
+            $postId = addPost($pdo, $title, $body, $userId, $uploadedImagePath);
 
             if($postId === false){
                 $errors[] = 'Post operation failed.';
@@ -61,7 +88,8 @@ if($_POST)
     }
 
     if(!$errors){
-        redirectAndExit('edit-post.php?post_id='.$postId);
+        // redirectAndExit('edit-post.php?post_id='.$postId);
+        redirectAndExit('index.php');
     }   
 
 }
@@ -88,15 +116,14 @@ if($_POST)
         <?php endif ?>
 
 
-        <form method="post" class="post-form user-form">
+        <form method="post" class="post-form user-form" enctype="multipart/form-data">
             <div>
                 <label for="post-title">Title:</label>
-                <input 
+                <textarea
                     id="post-title"
                     name="post-title"
-                    type="text"
-                    value="<?php echo htmlEscape($title) ?>"
-                />    
+                    placeholder="Write your title"
+                ><?php echo htmlEscape($title) ?></textarea>
             </div>
 
             <div>
@@ -106,7 +133,17 @@ if($_POST)
                     name="post-body"
                     rows="12"
                     cols="70"
+                    placeholder="Write your post"
                 ><?php echo htmlEscape($body) ?></textarea>
+            </div>
+
+            <div>
+                <label for="post-image">Post Image:</label>
+                <input type="file" name="post-image" accept="image/*">
+                <?php if($imagePath): ?>
+                    <p>Current Image:</p>
+                    <img src="<?php echo htmlEscape($imagePath); ?>" alt="Post Image" style="max-width:50%;">
+                <?php endif ?>
             </div>
 
             <div>

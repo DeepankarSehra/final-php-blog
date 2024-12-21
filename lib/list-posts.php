@@ -18,8 +18,6 @@ function deletePost(PDO $pdo, $postId)
         }
     }
 
-    
-
     return $result !== false;
 
 }
